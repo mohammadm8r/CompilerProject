@@ -58,7 +58,7 @@ class Lexer:
         'ELSE_KW',
         'CONST_KW',
         'TRUE_KW',
-        'FALSE_KW'
+        'FALSE_KW',
         'COMMENT'
     )
 
