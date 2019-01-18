@@ -59,6 +59,7 @@ class Lexer:
         'CONST_KW',
         'TRUE_KW',
         'FALSE_KW'
+        'COMMENT'
     )
 
     reserved = {
@@ -134,6 +135,10 @@ class Lexer:
         r'[1-9]+[0-9]*'
         return t
 
+    def t_COMMENT(self, t):
+        r'(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/)|(//.*)'
+        pass
+
     def t_newline(self, t):
         r'\n+'
         t.lexer.lineno += len(t.value)
@@ -151,11 +156,11 @@ class Lexer:
         data = '''
             void secondFunc(bool B ; int A ) {
             int firstArray [5] ;
-            bool A1 ;
+            //bool A1 ;
             bool A2 ;
             A1= firstNum <= secondNum
             A2 = B ;
-            if ( A1 and Then A2 )
+            //if ( A1 and Then A2 )
             continue ;
             Other
             {
