@@ -1,6 +1,5 @@
 import ply.lex as lex
 
-
 class Lexer:
     tokens = (
         'NUMBER',
@@ -128,12 +127,18 @@ class Lexer:
         r'[1-9]+[0-9]*'
         return t
 
+    def t_newline(self, t):
+        r'\n+'
+        t.lexer.lineno += len(t.value)
+
+    t_ignore = ' \t'
+
     def t_error(self, t):
         print("Illegal character '%s'" % t.value[0])
         t.lexer.skip(1)
 
-    def make_lexer(self, **kwargs):
-        lexer = lex.lex(self, **kwargs)
+    def make_lexer(self):
+        lexer = lex.lex(module=self)
 
         # Test it out
         data = '''
@@ -157,3 +162,6 @@ class Lexer:
             if not tok:
                 break  # No more input
             print(tok)
+
+m = Lexer()
+m.make_lexer()
