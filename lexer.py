@@ -2,7 +2,7 @@ import ply.lex as lex
 
 tokens = (
     'NUMBER',
-    'LETTER'
+    'LETTER',
     'MINUS',
 
 )
@@ -14,7 +14,7 @@ def t_NUMBER(t):
 
 
 def t_LETTER(t):
-    r'([a-zA-Z]+)+'
+    r'[a-zA-Z]+'
     return t
 
 def t_error(t):
@@ -25,7 +25,7 @@ lexer = lex.lex()
 
 # Test it out
 data = '''
-ARR + 4 * 10
+3 + 4 * 10
 + -20 *2
 '''
 
