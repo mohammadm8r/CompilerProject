@@ -3,9 +3,22 @@ import ply.lex as lex
 tokens = (
     'NUMBER',
     'LETTER',
-    'MINUS',
+    'BRACKET_OPEN',
+    'BRACKET_CLOSE',
+    'PARENTHESES_OPEN',
+    'PARENTHESES_CLOSE',
+    'BRACE_OPEN',
+    'BRACE_CLOSE'
 
 )
+
+
+t_PARENTHESES_OPEN = r'\('
+t_PARENTHESES_CLOSE = r'\)'
+t_BRACKET_OPEN = r'\['
+t_BRACKET_CLOSE = r'\]'
+t_BRACE_OPEN = r'\{'
+t_BRACE_CLOSE = r'\}'
 
 
 def t_NUMBER(t):
