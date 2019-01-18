@@ -1,6 +1,8 @@
 import ply.lex as lex
 
+
 class Lexer:
+    symbol_table = []
     tokens = (
         'NUMBER',
         'ID',
@@ -80,7 +82,9 @@ class Lexer:
         'else': 'ELSE_KW',
         'const': 'CONST_KW',
         'true': 'TRUE_KW',
-        'false': 'FALSE_KW'
+        'false': 'FALSE_KW',
+        'and': 'AND',
+        'or': 'OR'
     }
 
     t_PARENTHESES_OPEN = r'\('
@@ -121,6 +125,9 @@ class Lexer:
     def t_ID(self, t):
         r'[0-9]*[a-zA-Z]+[0-9a-zA-Z]*'
         t.type = self.reserved.get(t.value, 'ID')
+        if t.type == 'ID':
+            if t.value not in self.symbol_table:
+                self.symbol_table.append(t.value)
         return t
 
     def t_NUMBER(self, t):
@@ -142,15 +149,25 @@ class Lexer:
 
         # Test it out
         data = '''
-        int 1firstFunc()
-        {
-        int firstNum ;
-        int secondNum ;
-        firstNum= 5 * 10 ;
-        secondNum= firstNum ++ ;
-        //secondNum will be 51
-        Giveback secondNum
-        }
+            void secondFunc(bool B ; int A ) {
+            int firstArray [5] ;
+            bool A1 ;
+            bool A2 ;
+            A1= firstNum <= secondNum
+            A2 = B ;
+            if ( A1 and Then A2 )
+            continue ;
+            Other
+            {
+            int B1 ;
+            if (B1<5)
+            till(B1 != 5)
+            B1++;
+            If (B1== A)
+            A2 = false;
+            }
+            comeBack;
+            }
         '''
 
         # Give the lexer some input
@@ -162,6 +179,7 @@ class Lexer:
             if not tok:
                 break  # No more input
             print(tok)
+
 
 m = Lexer()
 m.make_lexer()
