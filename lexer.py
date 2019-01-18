@@ -59,7 +59,7 @@ class Lexer:
         'CONST_KW',
         'TRUE_KW',
         'FALSE_KW',
-        'COMMENT'
+        'COMMENT',
     )
 
     reserved = {
@@ -149,42 +149,19 @@ class Lexer:
         print("Illegal character '%s'" % t.value[0])
         t.lexer.skip(1)
 
-    def make_lexer(self):
-        lexer = lex.lex(module=self)
-
-        # Test it out
-        data = '''
-            void secondFunc(bool B ; int A ) {
-            int firstArray [5] ;
-            //bool A1 ;
-            bool A2 ;
-            A1= firstNum <= secondNum
-            A2 = B ;
-            //if ( A1 and Then A2 )
-            continue ;
-            Other
-            {
-            int B1 ;
-            if (B1<5)
-            till(B1 != 5)
-            B1++;
-            If (B1== A)
-            A2 = false;
-            }
-            comeBack;
-            }
-        '''
-
+    def make_lexer(self, **kwargs):
+        lex_res = lex.lex(module=self, **kwargs)
+        return lex_res
         # Give the lexer some input
-        lexer.input(data)
+        # lexer.input(data)
 
         # Tokenize
-        while True:
-            tok = lexer.token()
-            if not tok:
-                break  # No more input
-            print(tok)
+        # while True:
+        #     tok = lexer.token()
+        #     if not tok:
+        #         break  # No more input
+        #     print(tok)
 
 
-m = Lexer()
-m.make_lexer()
+# m = Lexer()
+# m.make_lexer()
