@@ -6,5 +6,5 @@ data = '''
 '''
 l = Lexer()
 y = Yacc()
-r = y.build().parse(data, l.make_lexer(), False)
+r = y.make_parser().parse(data, l.make_lexer(), False)
 print(r)

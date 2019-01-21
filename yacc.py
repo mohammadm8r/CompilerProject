@@ -20,6 +20,17 @@ class Yacc:
 
     tokens = Lexer.tokens
 
+    def p_numOrletter1(self, p):
+        '''numOrletter : NUM'''
+    def p_numOrletter2(self, p):
+        '''numOrletter : LETTER'''
+    def p_numOrletter3(self, p):
+        '''numOrletter : LETTER NUM'''
+    def p_numOrletter4(self, p):
+        '''numOrletter : NUM LETTER'''
+    def p_numOrletter5(self, p):
+        '''numOrletter : empty'''
+
     def p_program(self, p):
         '''program : list'''
 
@@ -31,7 +42,7 @@ class Yacc:
     def p_declaration1(self, p):
         '''declaration : function'''
     def p_declaration2(self, p):
-        '''varDeclaration'''
+        '''declaration : varDeclaration'''
 
     def p_varDeclaration(self, p):
         '''varDeclaration : type variableList'''
@@ -42,15 +53,15 @@ class Yacc:
     def p_variableList1(self, p):
         '''variableList : variableList COMMA varInitialization'''
     def p_variableList2(self, p):
-        '''varInitialization'''
+        '''variableList : varInitialization'''
 
     def p_varInitialization1(self, p):
         '''varInitialization : varForm'''
     def p_varInitialization2(self, p):
-        '''varForm TWO_POINTS PARENTHESES_OPEN eachExpression PARENTHESES_CLOSE'''
+        '''varInitialization : varForm TWO_POINTS PARENTHESES_OPEN eachExpression PARENTHESES_CLOSE'''
 
     def p_varForm1(self, p):
-        '''varForm : LETTER numOrletter BRACKET_OPEN num BRACKET_CLOSE'''
+        '''varForm : LETTER numOrletter BRACKET_OPEN NUM BRACKET_CLOSE'''
     def p_varForm2(self, p):
         '''varForm : LETTER numOrletter'''
 
@@ -62,30 +73,26 @@ class Yacc:
     def p_type1(self, p):
         '''type : BOOLEAN_KW'''
     def p_type2(self, p):
-         '''CHARACTER_KW'''
+         '''type : CHARACTER_KW'''
     def p_type3(self, p):
-         '''INTEGER_KW'''
+         '''type : INTEGER_KW'''
     def p_type4(self, p):
-         '''CHAR_KW'''
+         '''type : CHAR_KW'''
     def p_type5(self, p):
-         '''BOOL_KW'''
+         '''type : BOOL_KW'''
     def p_type6(self, p):
-         '''INT_KW'''
-
-    #TODO till here
-
+         '''type : INT_KW'''
 
     def p_function1(self, p):
-        '''function : VOID_KW numOrLetter PARENTHESES_OPEN parameter PARENTHESES_CLOSE BRACE_OPEN statement BRACE_CLOSE'''
-
+        '''function : VOID_KW numOrletter PARENTHESES_OPEN parameter PARENTHESES_CLOSE BRACE_OPEN statement BRACE_CLOSE'''
     def p_function2(self, p):
-       '''function : type LETTER numOrLetter PARENTHESES_OPE parameter PARENTHESES_OPE statement'''
+        '''function : type LETTER numOrletter PARENTHESES_OPEN parameter PARENTHESES_CLOSE statement'''
 
     def p_parameter1(self, p):
         '''parameter : listOfParameters'''
     def p_parameter2(self, p):
         '''parameter : empty'''
-    def empty(self, p):
+    def p_empty(self, p):
         '''empty : '''
 
     def p_listOfParameters1(self, p):
@@ -108,9 +115,9 @@ class Yacc:
         '''localDeclarations : empty'''
 
     def p_paramId1(self, p):
-        '''paramId : LETTER numOrLetter'''
+        '''paramId : LETTER numOrletter'''
     def p_paramId2(self, p):
-        '''paramId : LETTER numOrLetter BRACKET_OPEN BRACKET_CLOSE'''
+        '''paramId : LETTER numOrletter BRACKET_OPEN BRACKET_CLOSE'''
 
     def p_statement1(self, p):
         '''statement : phrase'''
@@ -146,7 +153,7 @@ class Yacc:
     def p_ifBody1(self, p ) :
         '''ifBody : statement'''
     def p_ifBody2(self, p ) :
-        '''ifBody :statement OTHER_KW statement'''
+        '''ifBody : statement OTHER_KW statement'''
     def p_ifBody3(self, p ) :
         '''ifBody : SEMICOLON'''
 
@@ -158,7 +165,7 @@ class Yacc:
     def p_returnPhrase2(self, p ) :
         '''returnPhrase : GIVEBACK_KW allExpression SEMICOLON'''
     def p_returnPhrase3(self, p ) :
-        '''returnPhrase : GIVEBACK_KW numOrLetter SEMICOLON'''
+        '''returnPhrase : GIVEBACK_KW numOrletter SEMICOLON'''
 
     def p_continue(self, p ) :
         '''continue : CONTINUE_KW SEMICOLON'''
@@ -270,14 +277,12 @@ class Yacc:
         '''inalterable : LETTER numOrletter PARENTHESES_OPEN args PARENTHESES_CLOSE'''
 
     def p_args1(self, p):
-        '''args : arguments'''
+        '''args : argumentss'''
     def p_args2(self, p):
         '''args : empty'''
 
-    def p_arguments1(self, p):
-        ''''arguments : arguments COMMA allExpression'''
-    def p_arguments2(self, p):
-        ''''arguments : allExpression'''
+    def p_arguments(self, p):
+        '''arguments : arguments COMMA allExpression'''
 
     def p_constant1(self, p):
         '''constant : CONST_KW '''
@@ -300,7 +305,7 @@ class Yacc:
     def p_error(self, p):
         print("Syntax error in input!")
 
-    def build(self, **kwargs):
+    def make_parser(self, **kwargs):
         """
         build the parser
         """

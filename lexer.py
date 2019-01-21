@@ -4,8 +4,8 @@ import ply.lex as lex
 class Lexer:
     symbol_table = []
     tokens = (
-        'NUMBER',
-        'ID',
+        'NUM',
+        'LETTER',
         'BRACKET_OPEN',
         'BRACKET_CLOSE',
         'PARENTHESES_OPEN',
@@ -123,15 +123,15 @@ class Lexer:
     t_GT = r'>'
     t_NEQ = r'!='
 
-    def t_ID(self, t):
+    def t_LETTER(self, t):
         r'[0-9]*[a-zA-Z]+[0-9a-zA-Z]*'
-        t.type = self.reserved.get(t.value, 'ID')
-        if t.type == 'ID':
+        t.type = self.reserved.get(t.value, 'LETTER')
+        if t.type == 'LETTER':
             if t.value not in self.symbol_table:
                 self.symbol_table.append(t.value)
         return t
 
-    def t_NUMBER(self, t):
+    def t_NUM(self, t):
         r'[1-9]+[0-9]*'
         return t
 
@@ -152,16 +152,27 @@ class Lexer:
     def make_lexer(self, **kwargs):
         lex_res = lex.lex(module=self, **kwargs)
         return lex_res
-        # Give the lexer some input
-        # lexer.input(data)
-
-        # Tokenize
-        # while True:
-        #     tok = lexer.token()
-        #     if not tok:
-        #         break  # No more input
-        #     print(tok)
-
-
+#         # Give the lexer some input
+#         data ='''
+#             int 1firstFunc()
+#                 {
+#                 int firstNum ;
+#                 int secondNum ;
+#                 firstNum= 5 * 10 ;
+#                 secondNum= firstNum ++ ;
+#                 //secondNum will be 51
+#                 Giveback secondNum
+#                 }
+#         '''
+#         lex_res.input(data)
+#
+#         # Tokenize
+#         while True:
+#             tok = lex_res.token()
+#             if not tok:
+#                 break  # No more input
+#             print(tok)
+#
+#
 # m = Lexer()
 # m.make_lexer()
