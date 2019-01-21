@@ -1,6 +1,5 @@
 from ply import yacc
 
-# Get the token map from the lexer.  This is required.
 from lexer import Lexer
 
 
@@ -10,7 +9,6 @@ from lexer import Lexer
 #     # print()
 #     # print(log)
 #     # pass
-
 
 class Yacc:
     precedence = (
@@ -158,7 +156,7 @@ class Yacc:
         '''ifBody : SEMICOLON'''
 
     def p_iterationPhrase(self, p ) :
-        '''iterationPhrase : till PARENTHESES_OPEN eachExpression PARENTHESES_CLOSE statement'''
+        '''iterationPhrase : TILL_KW PARENTHESES_OPEN eachExpression PARENTHESES_CLOSE statement'''
 
     def p_returnPhrase1(self, p ) :
         '''returnPhrase : COMEBACK_KW SEMICOLON'''
@@ -190,20 +188,20 @@ class Yacc:
     def p_mathOp4(self, p):
         '''mathOp : MULTIPLY_EQUAL'''
     def p_mathOp5(self, p):
-        '''mathOp : DIVIDE_EQUAL'''
+        '''mathOp : DIVISION_EQUAL'''
 
     def p_eachExpression1(self, p):
         '''eachExpression : eachExpression logicOp eachExpression'''
     # def p_eachExpression2(self, p):
     #     '''eachExpression :eachExpression logicOp eachExpression'''
     def p_eachExpression3(self, p):
-        '''eachExpression : eachExpression logicOp THEN_KEYWORD eachExpression'''
+        '''eachExpression : eachExpression logicOp THEN_KW eachExpression'''
     def p_eachExpression4(self, p):
         '''eachExpression : logicOp eachExpression'''
     def p_eachExpression5(self, p):
         '''eachExpression : relExpression'''
     def p_eachExpression6(self, p):
-        '''eachExpression : eachExpression logicOp ELSE_KEYWORD eachExpression'''
+        '''eachExpression : eachExpression logicOp ELSE_KW eachExpression'''
 
     def p_relExpression1(self, p):
         '''relExpression : mathEXP compareType mathEXP'''
@@ -277,7 +275,7 @@ class Yacc:
         '''inalterable : LETTER numOrletter PARENTHESES_OPEN args PARENTHESES_CLOSE'''
 
     def p_args1(self, p):
-        '''args : argumentss'''
+        '''args : arguments'''
     def p_args2(self, p):
         '''args : empty'''
 
