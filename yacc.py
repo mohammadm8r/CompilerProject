@@ -3,13 +3,6 @@ from ply import yacc
 from lexer import Lexer
 
 
-# def logger(p, log):
-#     print(log, [str(x).replace('\\n', '') for x in p], sep='\t')
-#     # print([str(qr) for qr in Yacc.quadRuples])
-#     # print()
-#     # print(log)
-#     # pass
-
 class Yacc:
     precedence = (
         ('left', 'PLUS', 'MINUS'),
@@ -17,6 +10,9 @@ class Yacc:
     )
 
     tokens = Lexer.tokens
+
+    def p_program(self, p):
+        '''program : list'''
 
     def p_numOrletter1(self, p):
         '''numOrletter : NUM'''
@@ -29,9 +25,6 @@ class Yacc:
     def p_numOrletter5(self, p):
         '''numOrletter : empty'''
 
-    def p_program(self, p):
-        '''program : list'''
-
     def p_list1(self, p):
         '''list : list declaration'''
     def p_list2(self, p):
@@ -43,10 +36,10 @@ class Yacc:
         '''declaration : varDeclaration'''
 
     def p_varDeclaration(self, p):
-        '''varDeclaration : type variableList'''
+        '''varDeclaration : type variableList SEMICOLON'''
 
     def p_ScopedVariableDec(self, p):
-        '''ScopedVariableDec : scopedSpecifier variableList'''
+        '''ScopedVariableDec : scopedSpecifier variableList SEMICOLON'''
 
     def p_variableList1(self, p):
         '''variableList : variableList COMMA varInitialization'''
@@ -169,15 +162,15 @@ class Yacc:
         '''continue : CONTINUE_KW SEMICOLON'''
 
     def p_allExpression1(self, p):
-          '''allExpression : alterable mathOp allExpression'''
+        '''allExpression : alterable mathOp allExpression'''
     def p_allExpression2(self, p):
-          '''allExpression : alterable PLUS_PLUS'''
+        '''allExpression : alterable PLUS_PLUS'''
     def p_allExpression3(self, p):
-          '''allExpression : alterable MINUS_MINUS'''
+        '''allExpression : alterable MINUS_MINUS'''
     def p_allExpression4(self, p):
-          '''allExpression : eachExpression'''
+        '''allExpression : eachExpression'''
     def p_allExpression5(self, p):
-          '''allExpression : alterable mathOp alterable'''
+        '''allExpression : alterable mathOp alterable'''
 
     def p_mathOp1(self, p):
         '''mathOp : EQUAL'''
@@ -221,11 +214,11 @@ class Yacc:
         '''equal : EEQ'''
 
     def p_nonEqual1(self, p):
-       '''nonEqual : LT'''
+        '''nonEqual : LT'''
     def p_nonEqual2(self, p):
-       '''nonEqual : GT '''
+        '''nonEqual : GT '''
     def p_nonEqual3(self, p):
-       '''nonEqual : NEQ'''
+        '''nonEqual : NEQ'''
 
     def p_mathEXP1(self, p):
         '''mathEXP : mathEXP op mathEXP'''
@@ -279,8 +272,11 @@ class Yacc:
     def p_args2(self, p):
         '''args : empty'''
 
-    def p_arguments(self, p):
+    def p_arguments1(self, p):
         '''arguments : arguments COMMA allExpression'''
+    def p_arguments2(self, p):
+        '''arguments : allExpression'''
+
 
     def p_constant1(self, p):
         '''constant : CONST_KW '''
