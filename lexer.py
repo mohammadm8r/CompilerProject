@@ -152,6 +152,7 @@ class Lexer:
     def make_lexer(self, data, **kwargs):
         lex_res = lex.lex(module=self, **kwargs)
         lex_res.input(data)
+        # Tokenize
         while True:
             tok = lex_res.token()
             if not tok:
@@ -172,9 +173,7 @@ class Lexer:
 #         '''
 #         lex_res.input(data)
 #
-        # Tokenize
-
 #
 #
 # m = Lexer()
-# m.make_lexer()
+# m.make_lexer(data)
