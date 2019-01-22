@@ -83,8 +83,6 @@ class Yacc:
         '''parameter : listOfParameters'''
     def p_parameter2(self, p):
         '''parameter : empty'''
-    def p_empty(self, p):
-        '''empty : '''
 
     def p_listOfParameters1(self, p):
         '''listOfParameters : listOfParameters SEMICOLON paramTypeList'''
@@ -221,20 +219,28 @@ class Yacc:
         '''nonEqual : NEQ'''
 
     def p_mathEXP1(self, p):
-        '''mathEXP : mathEXP op mathEXP'''
+        '''mathEXP : mathEXP MULTIPLY mathEXP'''
     def p_mathEXP2(self, p):
+        '''mathEXP : mathEXP DIVIDE mathEXP'''
+    def p_mathEXP3(self, p):
+        '''mathEXP : mathEXP PLUS mathEXP'''
+    def p_mathEXP4(self, p):
+        '''mathEXP : mathEXP MINUS mathEXP'''
+    def p_mathEXP5(self, p):
+        '''mathEXP : mathEXP PERCENTAGE mathEXP'''
+    def p_mathEXP6(self, p):
         '''mathEXP : unaryExpression'''
 
-    def p_op1(self, p):
-        '''op : PLUS '''
-    def p_op2(self, p):
-        '''op : MINUS'''
-    def p_op3(self, p):
-        '''op : MULTIPLY'''
-    def p_op4(self, p):
-        '''op : DIVIDE'''
-    def p_op5(self, p):
-        '''op : PERCENTAGE'''
+    # def p_op1(self, p):
+    #     '''op : PLUS '''
+    # def p_op2(self, p):
+    #     '''op : MINUS'''
+    # def p_op3(self, p):
+    #     '''op : MULTIPLY'''
+    # def p_op4(self, p):
+    #     '''op : DIVIDE'''
+    # def p_op5(self, p):
+    #     '''op : PERCENTAGE'''
 
     def p_unaryExpression1(self, p):
         '''unaryExpression : unaryop unaryExpression'''
@@ -277,7 +283,6 @@ class Yacc:
     def p_arguments2(self, p):
         '''arguments : allExpression'''
 
-
     def p_constant1(self, p):
         '''constant : CONST_KW '''
     def p_constant2(self, p):
@@ -296,8 +301,11 @@ class Yacc:
     def p_logicOp5(self, p):
         '''logicOp : OR'''
 
+    def p_empty(self, p):
+        '''empty : '''
+
     def p_error(self, p):
-        print("Syntax error in input!")
+        print("Syntax error in input: ", p)
 
     def make_parser(self, **kwargs):
         """
