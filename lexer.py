@@ -149,8 +149,14 @@ class Lexer:
         print("Illegal character '%s'" % t.value[0])
         t.lexer.skip(1)
 
-    def make_lexer(self, **kwargs):
+    def make_lexer(self, data, **kwargs):
         lex_res = lex.lex(module=self, **kwargs)
+        lex_res.input(data)
+        while True:
+            tok = lex_res.token()
+            if not tok:
+                break  # No more input
+            print(tok)
         return lex_res
 #         # Give the lexer some input
 #         data ='''
@@ -166,12 +172,8 @@ class Lexer:
 #         '''
 #         lex_res.input(data)
 #
-#         # Tokenize
-#         while True:
-#             tok = lex_res.token()
-#             if not tok:
-#                 break  # No more input
-#             print(tok)
+        # Tokenize
+
 #
 #
 # m = Lexer()
